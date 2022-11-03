@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.*;
 
 /**
  * Emulate a deck of cards
@@ -45,6 +46,9 @@ public class Deck
      */
     public void shuffle() {
         // To be written
+        Collections.shuffle(cards);
+        System.out.println(cards);
+        
     }
     
     /**
