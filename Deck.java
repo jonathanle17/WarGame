@@ -11,8 +11,6 @@ import java.util.*;
 public class Deck
 {
     private List<Card> cards;
-    private int topcard;
-    private Card[] deck = new Card [52];
 
     /**
      * Deck constructor: Create an empty deck of cards
@@ -76,15 +74,10 @@ public class Deck
      */
     public Card dealCardFromDeck() {
         // To be written 
-        Card theCard;
-        if (topcard < deck.length) {
-            theCard = deck[topcard];
-            topcard++;
+        while (true) {
+            Card topcard1 = Deck0.pop();
+            Card topcard2 = Deck1.pop();
         }
-        else
-            theCard = null;
-            
-        return null;
     }
     
     /**
@@ -93,7 +86,18 @@ public class Deck
      */
     public void addCardToDeck(Card cardToAdd) {
         // To be written
-        deck = 
+        if(topcard1.getCard() > topcard2.getCard()) {
+            Deck0.addLast(topcard1);
+            Deck0.addLast(topcard2);
+            
+        if (topcard2.getCard() > topcard1.getCard()) {
+            Deck1.addLast(topcard1);
+            Deck1.addLast(topcard2);
+        }
+            
+        }
+            
+        }
     }
     
 }
