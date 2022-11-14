@@ -74,10 +74,7 @@ public class Deck
      */
     public Card dealCardFromDeck() {
         // To be written 
-        while (true) {
-            Card topcard1 = Deck0.pop();
-            Card topcard2 = Deck1.pop();
-        }
+        return this.cards.remove(this.cards.size() - 1);
     }
     
     /**
@@ -86,18 +83,7 @@ public class Deck
      */
     public void addCardToDeck(Card cardToAdd) {
         // To be written
-        if(topcard1.getCard() > topcard2.getCard()) {
-            Deck0.addLast(topcard1);
-            Deck0.addLast(topcard2);
-            
-        if (topcard2.getCard() > topcard1.getCard()) {
-            Deck1.addLast(topcard1);
-            Deck1.addLast(topcard2);
-        }
-            
-        }
-            
-        }
+        this.cards.add(0, c);
     }
     
 }
