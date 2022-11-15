@@ -1,4 +1,6 @@
-
+import java.util.List;
+import java.util.ArrayList;
+import java.util.*;
 /**
  * War game class
  *
@@ -7,6 +9,9 @@
  */
 public class War
 {
+    private Deck deck;
+    private Player player1;
+    
     /**
      * Constructor for the game
      * Include your initialization here -- card decks, shuffling, etc
@@ -15,6 +20,8 @@ public class War
     public War()
     {
         // Initializations here...
+        
+  
         
         
         // ...then run the event loop
@@ -25,7 +32,14 @@ public class War
      * This is the game's event loop. The code in here should come
      * from the War flowchart you created for this game
      */
-    public void runEventLoop() {
+    public void runEventLoop() { 
+        Scanner in = new Scanner(System.in);
+        String name = in.nextLine();
+        this.player1 = new Player(name);
+        deck.shuffle();
+        
+        
+        
 
     }
     
