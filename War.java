@@ -10,8 +10,6 @@ import java.util.*;
 public class War
 {
     private Deck deck;
-    private Player player1;
-    private Player player2;
     Deck deck1, deck2;
     
     /**
@@ -22,14 +20,11 @@ public class War
     public War()
     {
         // Initializations here...
-        Scanner in = new Scanner(System.in);
-        String name = in.nextLine();
-        String name2 = in.nextLine();
-        this.player1 = new Player(name);
-        this.player2 = new Player(name2);
         deck.initializeNewDeck();
-        
-        
+        Deck deck = new Deck();
+        deck.shuffle();
+        deck.dealDeck();
+        deck.dealCardFromDeck();
         
         // ...then run the event loop
         this.runEventLoop();
@@ -40,8 +35,9 @@ public class War
      * from the War flowchart you created for this game
      */
     public void runEventLoop() { 
-        deck.shuffle();
-        deck.dealDeck();
+        deck.dealCardFromDeck();
+
+        
         
         
         
