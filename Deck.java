@@ -47,8 +47,6 @@ public class Deck
     public void shuffle() {
         // To be written
         Collections.shuffle(cards);
-        System.out.println(cards);
-        
     }
     
     /**

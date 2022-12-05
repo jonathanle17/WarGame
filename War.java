@@ -9,187 +9,150 @@ import java.util.*;
  */
 public class War
 {
-    private Deck deck;
-    Deck deck1, deck2;
-    
-    /**
-     * Constructor for the game
-     * Include your initialization here -- card decks, shuffling, etc
-     * Run the event loop after you've done the initializations
-     */
-    public War()
-    {
-        // Initializations here...
-        deck.initializeNewDeck();
+    Deck[] player;
+
+    public War() {
         Deck deck = new Deck();
+        deck.initializeNewDeck();
         deck.shuffle();
-        deck.dealDeck();
-        deck.dealCardFromDeck();
-        
-        // ...then run the event loop
+        player = deck.dealDeck();
+
         this.runEventLoop();
+    }     
+
+    public void runEventLoop() 
+    {
+        for (int turn=0; turn<=300; turn++) 
+        {
+            if (player[0].getDeckSize() == 0) 
+            {
+                System.out.println("Player 1 has no more cards. Therefore, Player 2 is the winner.");
+                break;
+            }
+            else if (player[1].getDeckSize() == 0) 
+            {
+                System.out.println("Player 2 has no more cards. Therefore, Player 1 is the winner.");
+                break;
+            }
+            else {
+                Card player1 = player[0].dealCardFromDeck();
+                Card player2 = player[1].dealCardFromDeck();
+                System.out.println("Player 1: " + player1.getFace() + " of " + player1.getSuit());
+                System.out.println("Player 2: " + player2.getFace() + " of " + player2.getSuit());
+
+                if (player1.getRank() > player2.getRank()) 
+                {
+                    player[0].addCardToDeck(player1);
+                    player[0].addCardToDeck(player2);
+                    System.out.println("Player 1 wins round " + turn);
+                    System.out.println("Player 1 has " + player[0].getDeckSize() + " cards");
+                    System.out.println("Player 2 has " + player[1].getDeckSize() + " cards");
+                    System.out.println();
+                }
+                else if (player2.getRank() > player1.getRank()) 
+                {
+                    player[1].addCardToDeck(player1);
+                    player[1].addCardToDeck(player2);
+                    System.out.println("Player 2 wins round " + turn);
+                    System.out.println("Player 1 has " + player[0].getDeckSize() + " cards");
+                    System.out.println("Player 2 has " + player[1].getDeckSize() + " cards");
+                    System.out.println();
+                }
+                else 
+                {
+                    Deck wardeck = new Deck();
+                    int wdecklength = wardeck.getDeckSize();
+                    wardeck.addCardToDeck(player1);
+                    wardeck.addCardToDeck(player2);
+                    System.out.println("Battle was a tie. Commence war.");
+
+                    if (player[0].getDeckSize() < 4) 
+                    {
+                        System.out.println("Player 1 is unable to compete in war. Therefore, Player 2 wins.");
+                        break;
+                    }
+                    else if (player[1].getDeckSize() < 4) 
+                    {
+                        System.out.println("Player 2 is unable to compete in war. Therefore, Player 1 wins.");
+                        break;
+                    }
+                    else 
+                    {
+                        for (int x=0; x<4; x++) 
+                        {
+                            player1 = player[0].dealCardFromDeck();
+                            player2 = player[1].dealCardFromDeck();
+                            wardeck.addCardToDeck(player1);
+                            wardeck.addCardToDeck(player2);
+                        }
+                        player1 = player[0].dealCardFromDeck();
+                        player2 = player[1].dealCardFromDeck();
+                        System.out.println("Player 1: " + player1.getFace() + " of " + player1.getSuit());
+                        System.out.println("Player 2: " + player2.getFace() + " of " + player2.getSuit());
+
+                        if (player1.getRank() > player2.getRank()) 
+                        {
+                            player[0].addCardToDeck(player1);
+                            player[0].addCardToDeck(player2);
+                            Card pot;
+                            for (int p1warwin=0; p1warwin<wdecklength; p1warwin++) 
+                            {
+                                pot = wardeck.dealCardFromDeck();
+                                player[0].addCardToDeck(pot);
+                            }
+                            System.out.println("Player 1 wins the war and round " + turn);
+                            System.out.println("Player 1 has " + player[0].getDeckSize() + " cards");
+                            System.out.println("Player 2 has " + player[1].getDeckSize() + " cards");
+                            System.out.println();
+                        }
+                        else if (player2.getRank() > player1.getRank()) 
+                        {
+                            player[1].addCardToDeck(player1);
+                            player[1].addCardToDeck(player2);
+                            Card pot;
+                            for (int p2warwin=0; p2warwin<wdecklength; p2warwin++) 
+                            {
+                                pot = wardeck.dealCardFromDeck();
+                                player[1].addCardToDeck(pot);
+                            }
+                            System.out.println("Player 2 wins the war and round " + turn);
+                            System.out.println("Player 1 has " + player[0].getDeckSize() + " cards");
+                            System.out.println("Player 2 has " + player[1].getDeckSize() + " cards");
+                            System.out.println();
+                        }
+                        if (player[0].getDeckSize() == 0) 
+                        {
+                            System.out.println("Player 1 has no more cards. Therefore, Player 2 wins.");
+                            break;
+                        }
+                        else if (player[1].getDeckSize() == 0) 
+                        {
+                            System.out.println("Player 2 has no more cards. Therefore, Player 1 wins.");
+                            break;
+                        }
+                    }    
+                } 
+            }
+            if (turn >= 300) 
+            {
+                if (player[0].getDeckSize() > player[1].getDeckSize()) 
+                {
+                    System.out.println("After 300 rounds, Player 1 has more cards. Therefore, Player 1 is the winner.");
+                    break;
+                }
+                else 
+                {
+                    System.out.println("After 300 rounds, Player 2 has more cards. Therefore, Player 2 is the winner.");
+                    break;
+                }
+            }
+        }
     }
-    
-    /**
-     * This is the game's event loop. The code in here should come
-     * from the War flowchart you created for this game
-     */
-    public void runEventLoop() { 
-        Scanner stdin = new Scanner(System.in);
-		Random r = new Random();
 
-		// Create a deck of cards.
-		ArrayList<Card> deck = new ArrayList<Card>();
-		for (int i=0; i<4; i++)
-			for (int j=1; j<=13; j++)
-				deck.add(new Card(SUITS.charAt(i), j));
-
-		// Set up both players' cards.
-		ArrayList<Card> player1 = new ArrayList<Card>();
-		ArrayList<Card> player2 = new ArrayList<Card>();
-
-		// Deal the cards randomly to the two players.
-		int cnt = 0;
-		while (deck.size() > 0) {
-			int nextCard = r.nextInt(deck.size());
-			if (cnt%2 == 0) {
-				Card c1 = deck.remove(nextCard);
-				player1.add(c1);
-			}
-			else
-				player2.add(deck.remove(nextCard));
-			cnt++;
-		}
-
-		int winner = -1, turns = 0;
-
-		// Play war until someone runs out of cards.
-		while (player1.size() > 0 && player2.size() > 0 && turns < LIMIT) {
-
-			// Show how many cards each team has,
-			System.out.println("Player 1 has "+player1.size()+" cards and Player 2 has "+player2.size()+" cards.");
-
-			Card c1 = player1.remove(0);
-			Card c2 = player2.remove(0);
-
-			// Print out the new play.
-			System.out.println("Player 1 plays "+c1+" and player 2 plays "+c2);
-
-			// War!
-			if (c1.equalsForWar(c2)) {
-
-				// Notify that we have a war.
-				System.out.println("We have a war!!!");
-
-				// Not enough cards for player 1 to carry out the war.
-				if (player1.size() < 3) {
-					winner = 2;
-					System.out.println("Player 1 ran out of cards in a war battle.");
-					break;
-				}
-
-				// Same case for player 2.
-				else if (player2.size() < 3) {
-					winner = 1;
-					System.out.println("Player 2 ran out of cards in a war battle.");
-					break;
-				}
-
-				// Have a battle. Put two cards in the "bin" and battle with the third card.
-				else{
-
-					// Two cards taken from both players stored in tmp.
-					ArrayList<Card> tmp = new ArrayList<Card>();
-					for (int i=0; i<2; i++) {
-						tmp.add(player1.remove(0));
-						tmp.add(player2.remove(0));
-					}
-
-					// These are the next cards to battle.
-					Card c1extra = player1.remove(0);
-					Card c2extra = player2.remove(0);
-
-					// Print out cards played in battle.
-					System.out.println("In the card battle player 1 played "+c1extra+" and player 2 played "+c2extra);
-
-					// I'll use the no tie-breaker rule between these cards to simplify the game.
-					if (c1extra.beats(c2extra)) {
-
-						// Lots of cards to add! (8 in all)
-						player1.add(c1);
-						player1.add(c2);
-						player1.add(c1extra);
-						player1.add(c2extra);
-						for (Card c: tmp)
-							player1.add(c);
-
-						System.out.println("Player 1 wins the battle and gets all 8 cards!");
-					}
-
-					else {
-
-						// Here we do it for player 2 instead.
-						player2.add(c1);
-						player2.add(c2);
-						player2.add(c1extra);
-						player2.add(c2extra);
-						for (Card c: tmp)
-							player2.add(c);
-
-						System.out.println("Player 2 wins the battle and gets all 8 cards!");
-					}
-				}
-			}
-
-			// Regular case.
-			else {
-				if (c1.beats(c2)) {
-					player1.add(c1);
-					player1.add(c2);
-					System.out.println("Player 1 wins the battle and gets 2 cards.");
-				}
-				else {
-					player2.add(c1);
-					player2.add(c2);
-					System.out.println("Player 2 wins the battle and gets 2 cards.");
-				}
-
-			}
-
-			turns++;
-			System.out.println();
-		}
-
-		if (turns == LIMIT) {
-			System.out.println("Sorry, after 10000 turns no one won, so the game is a tie!");
-		}
-
-		// Assign winner if unassigned.
-		else if (winner == -1) {
-			if (player2.size() == 0)
-				winner = 1;
-			else
-				winner = 2;
-		}
-
-		// Print out final winner.
-		if (winner != -1)
-			System.out.println("The winner is player "+winner);
-
-        
-        
-        
-        
-        
-
-    }
-    
-    /**
-     * The main method is called when Java starts your program
-     */
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
+        System.out.print("\u000C");
         War war = new War();
-        war.runEventLoop();
     }
 
 }
